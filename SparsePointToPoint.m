@@ -1,28 +1,28 @@
-function [MovePts,T,err,rmse] = SparsePointToPoint(source_points,target_points,iter_In,iter_Out,p)
+function [move_points,T,err,rmse] = SparsePointToPoint(source_points,target_points,iter_In,iter_Out,p)
 %SPARSE_POINT_TO_POINT 稀疏point to point
 %   此处显示详细说明
 if length(source_points(:,1))==4
     source_points=source_points(1:3,:);
     target_points=target_points(1:3,:);
 end
-MovePts = source_points;
+move_points = source_points;
 NS = createns(target_points','NSMethod','kdtree');
-Lambda=zeros(size(MovePts));
+lambda_pTpln=zeros(size(move_points));
+Z=zeros(size(move_points));
 mu=10;
 err=[];
 rmse=0;
 for i=1:iter_Out
-    [idx, ~] = knnsearch(NS,MovePts','k',1);
+    [idx, ~] = knnsearch(NS,move_points','k',1);
     MatchPts= target_points(:,idx);
     for j=1:iter_In
-        H=MovePts-MatchPts+Lambda/mu;
-        Z=zeros(size(MovePts));
+        H=move_points-MatchPts+lambda_pTpln/mu;
         for k=1:length(Z(1,:))
             Z(:,k)=shrink(H(:,k),p,mu);
         end
-        C=MatchPts+Z-Lambda / mu;
-        [R,t]=svd_icp(MovePts,C);
-        MovePts=R*MovePts+t;
+        C=MatchPts+Z-lambda_pTpln / mu;
+        [R,t]=svd_icp(move_points,C);
+        move_points=R*move_points+t;
         T=[R,t;[0,0,0,1]];
         T1=eye(4);
         d=norm(T1-T);
@@ -31,18 +31,18 @@ for i=1:iter_Out
             return;
         end
         e=0;
-        for k=1:length(MovePts(1,:))
-            e=e+norm(MovePts(:,k)-MatchPts(:,k));
+        for k=1:length(move_points(1,:))
+            e=e+norm(move_points(:,k)-MatchPts(:,k));
         end
-        rmse=sqrt(e/length(MovePts(1,:)));
-        delta=MovePts-MatchPts-Z;
-        Lambda=Lambda+mu*delta;
+        rmse=sqrt(e/length(move_points(1,:)));
+        delta=move_points-MatchPts-Z;
+        lambda_pTpln=lambda_pTpln+mu*delta;
     end
 end
-N=length(MovePts(1,:));
+N=length(move_points(1,:));
 RSME=0;
 for i=1:N
-    RSME=RSME+norm(MovePts(:,i)-MatchPts(:,i));
+    RSME=RSME+norm(move_points(:,i)-MatchPts(:,i));
 end
 RSME=sqrt(RSME/N);
 end

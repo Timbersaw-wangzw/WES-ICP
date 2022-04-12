@@ -18,8 +18,8 @@ hold on
 axis off
 % plot3(source_points(1,:),source_points(2,:),source_points(3,:),'b.','MarkerSize',2.5);
 % [move_points,q,~,e2]=SparsePointToPoint(source_points,target_points,5,100,0.4);
-[move_points,T,RMSE]=SparsePointToPlane1(source_points,target_points,target_normals,5,100,0.4);
-% [move_points,T,RMSE]=SparseWeightedDistance(source_points,target_points,target_points(4:6,:),5,100,0.4);
+[move_points,T,RMSE]=SparsePointToPlane(source_points,target_points,target_normals,50,20,5,0.4);
+% [move_points,T,RMSE]=SparseWeightedDistance(source_points,target_points,target_normals,50,100,5,0.4);
 % hold on
 
 % plot3(target_points(1,:),target_points(2,:),target_points(3,:),'r.','MarkerSize',2.5);
