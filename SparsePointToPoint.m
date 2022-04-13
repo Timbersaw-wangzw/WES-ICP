@@ -1,58 +1,80 @@
-function [move_points,T,err,rmse] = SparsePointToPoint(source_points,target_points,iter_In,iter_Out,p)
-%SPARSE_POINT_TO_POINT 稀疏point to point
-%   此处显示详细说明
+function [move_points,T] = SparsePointToPoint(source_points,target_points,max_icp,max_outer,max_inner,p)
+%SPARSE_POINT_TO_POINT sparse point to point
+%   INPUT:
+%   source_points: source point clouds
+%   target_points: target point clouds
+%   max_icp: maximum iteration number of searching cloest points and
+%   solving R and t
+%   max_out: maximum iteration number of solving ALM by ADMM
+%   max_in: maximum iteration number of solving R and t
+%   p: p-norm
+%   OUTPUT:
+%   move_points: final results
+%   T: optimal homogenous transformation matrix 
+fprintf('sparse point-to-point:\n');
 if length(source_points(:,1))==4
     source_points=source_points(1:3,:);
     target_points=target_points(1:3,:);
 end
 move_points = source_points;
 NS = createns(target_points','NSMethod','kdtree');
-lambda_pTpln=zeros(size(move_points));
+Num=length(source_points(1,:));
+old_points=source_points;
+lambda=zeros(size(move_points));
 Z=zeros(size(move_points));
 mu=10;
-err=[];
-rmse=0;
-for i=1:iter_Out
+T=eye(4);
+for icp=1:max_icp
     [idx, ~] = knnsearch(NS,move_points','k',1);
-    MatchPts= target_points(:,idx);
-    for j=1:iter_In
-        H=move_points-MatchPts+lambda_pTpln/mu;
-        for k=1:length(Z(1,:))
-            Z(:,k)=shrink(H(:,k),p,mu);
+    match_points= target_points(:,idx);
+    fprintf('iteration at %d-%d\n', icp,max_icp);
+    for i=1:max_outer
+        for j=1:max_inner
+            H=move_points-match_points+lambda/mu;
+            for k=1:Num
+                Z(:,k)=shrink(H(:,k),p,mu);
+            end
+            C=match_points+Z-lambda / mu;
+            [R,t]=svd_icp(move_points,C);
+            T1=eye(4);
+            T1(1:3,1:3)=R;
+            T1(1:3,4)=t;
+            T=T1*T;
+            move_points=R*move_points+t;
+            dual_max=0;
+            for m=1:Num
+                dual=norm((old_points(:,m)-move_points(:,m)));
+                if (dual>dual_max)
+                    dual_max=dual;
+                end
+            end
+            old_points=move_points;
+            if dual_max <1e-5
+                break;
+            end
         end
-        C=MatchPts+Z-lambda_pTpln / mu;
-        [R,t]=svd_icp(move_points,C);
-        move_points=R*move_points+t;
-        T=[R,t;[0,0,0,1]];
-        T1=eye(4);
-        d=norm(T1-T);
-        err=[err,d];
-        if d<1e-5
-            return;
+        delta=move_points-match_points-Z;
+        prime_max=0;
+        for k=1:Num
+            prime=norm(move_points(:,k)-match_points(:,k)-Z(:,k));
+            if (prime>prime_max)
+                prime_max=prime;
+            end
         end
-        e=0;
-        for k=1:length(move_points(1,:))
-            e=e+norm(move_points(:,k)-MatchPts(:,k));
+        lambda=lambda+mu*delta;
+        if dual_max <1e-5 && prime_max<1e-5
+            break;
         end
-        rmse=sqrt(e/length(move_points(1,:)));
-        delta=move_points-MatchPts-Z;
-        lambda_pTpln=lambda_pTpln+mu*delta;
     end
 end
-N=length(move_points(1,:));
-RSME=0;
-for i=1:N
-    RSME=RSME+norm(move_points(:,i)-MatchPts(:,i));
 end
-RSME=sqrt(RSME/N);
-end
-function [R,t]=svd_icp(SourcePts,TargetPts)
-centerA=mean(SourcePts')';
-centerB=mean(TargetPts')';     
-tempA=SourcePts-centerA;        
-tempB=TargetPts-centerB;
+function [R,t]=svd_icp(source_points,target_points)
+centerA=mean(source_points')';
+centerB=mean(target_points')';
+tempA=source_points-centerA;
+tempB=target_points-centerB;
 H=zeros(3,3);
-for i=1:length(SourcePts(1,:))
+for i=1:length(source_points(1,:))
     H=H+tempA(:,i)*tempB(:,i)';
 end
 [U,~,V]=svd(H);
