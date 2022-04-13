@@ -22,7 +22,8 @@ The program includes three algorithms
 
 Our **WES-ICP** can restrain the sliding and escape the local minima. Specifically, **sparse point to point** is easily trapped into local minima and **sparse point-to-plane** slides along the tangent space. Those phenomenons can be seen in our project.
 you can run directly `mainICP.m` to see those phenomenons.
-
+# Phenomenons
+![inital position](https://github.com/Timbersaw-wangzw/WES-ICP-M/blob/master/inital%20pose.jpg)
 ![slding](https://github.com/Timbersaw-wangzw/WES-ICP-M/blob/master/sparse%20point%20to%20plane%20gap.jpg)
 
 ![local minima](https://github.com/Timbersaw-wangzw/WES-ICP-M/blob/master/sparse%20point%20to%20point.jpg)
