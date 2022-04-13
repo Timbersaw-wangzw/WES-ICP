@@ -24,20 +24,11 @@ Our **WES-ICP** can restrain the sliding and escape the local minima. Specifical
 you can run directly `mainICP.m` to see those phenomenons.
 # Phenomenons
 
- <center>
-    <img style="border-radius: 0.3125em;
-    box-shadow: 0 2px 4px 0 rgba(34,36,38,.12),0 2px 10px 0 rgba(34,36,38,.08);" 
-    src="https://github.com/Timbersaw-wangzw/WES-ICP-M/blob/master/inital%20pose.jpg" width = "30%" alt=""/>
-    <img style="border-radius: 0.3125em;
-    box-shadow: 0 2px 4px 0 rgba(34,36,38,.12),0 2px 10px 0 rgba(34,36,38,.08);" 
-    src="https://github.com/Timbersaw-wangzw/WES-ICP-M/blob/master/sparse%20point%20to%20plane%20gap.jpg" width = "30%" alt=""/>
-    <br>
-    <div style="color:orange; border-bottom: 1px solid #d9d9d9;
-    display: inline-block;
-    color: #999;
-    padding: 2px;">
-      在这里插入图片注释
-  	</div>
+<center>
+<figure>
+<img src="https://github.com/Timbersaw-wangzw/WES-ICP-M/blob/master/inital%20pose.jpg"/>
+<img src="https://github.com/Timbersaw-wangzw/WES-ICP-M/blob/master/sparse%20point%20to%20plane%20gap.jpg"/>
+</figure>
 </center>
 
 ![inital position](https://github.com/Timbersaw-wangzw/WES-ICP-M/blob/master/inital%20pose.jpg)
