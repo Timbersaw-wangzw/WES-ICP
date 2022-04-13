@@ -3,7 +3,7 @@ This repository includes the source code of the paper Robust Point Clouds Regist
 This code was written by MATLAB.
 # Introduction and Usage
 The program includes the following three source point clouds and the same target point clouds.
-Those source point clouds have been coarse transformed.
+Those source point clouds have been coarse transformed, but they have different overlapping areas between target point clouds.
 ```
 source point clouds:
 - coarse_source_points0.70.txt
@@ -12,7 +12,7 @@ source point clouds:
 target point clouds:
 - target points.txt
 ```
-The directory `github_repo` is lie algebra library.
+The directory `github_repo` is the lie algebra library.
 The program includes three algorithms
 ```
 1. sparse point to point
