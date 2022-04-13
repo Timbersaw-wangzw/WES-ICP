@@ -17,7 +17,10 @@ The program includes three algorithms
 ```
 1. sparse point to point
 2. sparse point to plane
-3. WES-ICP
+3. ours(WES-ICP)
 ```
 
-you can run directly `mainICP.m` to see the results.
+Our **WES-ICP** can restrain the sliding and escape the local minima. Specifically, **sparse point to point** is easily trapped into local minima and **sparse point-to-plane** slides along the tangent space. Those phenomenons can be seen in our project.
+you can run directly `mainICP.m` to see those phenomenons.
+
+![gap](sparse point to plane gap.jpg)
