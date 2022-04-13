@@ -22,22 +22,7 @@ The program includes three algorithms
 
 Our **WES-ICP** can restrain the sliding and escape the local minima. Specifically, **sparse point to point** is easily trapped into local minima and **sparse point-to-plane** slides along the tangent space. Those phenomenons can be seen in our project.
 you can run directly `mainICP.m` to see those phenomenons.
+
 # Phenomenons
 
-<table>
-    <tr>
-        <td ><center><img src="https://img-blog.csdn.net/20180731150122598?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzMzODI2NTY0/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70" >图1  范冰冰 </center></td>
-        <td ><center><img src="https://img-blog.csdn.net/20180731150122598?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzMzODI2NTY0/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70"  >图2 范冰冰</center></td>
-    </tr>
-    <tr>
-        <td><center><img src="https://img-blog.csdn.net/20180731150144421?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzMzODI2NTY0/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70" >图3 高圆圆</center></td>
-        <td ><center><img src="https://img-blog.csdn.net/20180731150144421?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzMzODI2NTY0/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70"  >图4 高圆圆</center> </td>
-    </tr>
-
-</table>
-![inital position](https://github.com/Timbersaw-wangzw/WES-ICP-M/blob/master/inital%20pose.jpg)
-![slding](https://github.com/Timbersaw-wangzw/WES-ICP-M/blob/master/sparse%20point%20to%20plane%20gap.jpg)
-
-![local minima](https://github.com/Timbersaw-wangzw/WES-ICP-M/blob/master/sparse%20point%20to%20point.jpg)
-
-![restrain the sliding and escape the local minima](https://github.com/Timbersaw-wangzw/WES-ICP-M/blob/master/WES-ICP.jpg)
+![results](https://github.com/Timbersaw-wangzw/WES-ICP-M/blob/master/result.jpg)
