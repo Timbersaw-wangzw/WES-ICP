@@ -36,27 +36,27 @@ for icp=1:max_icp
     match_normals=target_normals(:,idx);
     match_points= target_points(:,idx);
     % weight the point-to-point and point-to-plane distance
-    w_pTp =  1 / exp(max_icp - icp);
-    w_pTpln = 1;
-    if icp==max_icp-10
-        w_pTp =  1;
-        w_pTpln = 0;
-    end
+    w_pTp =  2 / (1+exp(max_icp - icp));
+    w_pTpln = 1-w_pTp;
+%     if icp==max_icp-10
+%         w_pTp =  1;
+%         w_pTpln = 0;
+%     end
     fprintf('iteration at %d-%d\n', icp,max_icp);
     for i=1:max_outer
         for j=1:max_inner
             % sparse point-to-point shrink
             H_point_to_point=move_points-match_points+lambda_pTp/mu;
-            for k=1:Num
+            for  k=1:Num
                 Z_pTp(:,k)=shrink(H_point_to_point(:,k),p,mu);
             end
             inter_points=match_points+Z_pTp-lambda_pTp / mu;
             % sparse point-to-plane shrink
-            for k=1:Num
+            for  k=1:Num
                 H_pTpln(k)=match_normals(:,k)'* (move_points(:,k)-match_points(:,k));
             end
             H_pTpln=H_pTpln+lambda_pTpln/mu;
-            for k=1:Num
+            for  k=1:Num
                 Z_pTpln(k)=shrink(H_pTpln(k),p,mu);
             end
             inter_d=Z_pTpln-lambda_pTpln/mu;
@@ -67,7 +67,7 @@ for icp=1:max_icp
             T=T1*T;
             move_points=R*move_points+t';
             dual_max=0;
-            for k=1:Num
+            for  k=1:Num
                 dual_pTpln=norm((old_points(:,k)-move_points(:,k))'*match_normals(:,k));
                 dual_pTp=norm((old_points(:,k)-move_points(:,k)));
                 dual=max(dual_pTpln,dual_pTp);
@@ -82,7 +82,7 @@ for icp=1:max_icp
         end
         delta_pTp=move_points-match_points-Z_pTp;
         prime_max=0;
-        for k=1:Num
+        for  k=1:Num
             delta_pTpln(k)=match_normals(:,k)'*(move_points(:,k)-match_points(:,k))-Z_pTpln(k);
             prime_pTpln=abs(delta_pTpln(k));
             prime_pTp=norm(move_points(:,k)-match_points(:,k)-Z_pTp(:,k));
