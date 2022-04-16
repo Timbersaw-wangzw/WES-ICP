@@ -38,10 +38,6 @@ for icp=1:max_icp
     % weight the point-to-point and point-to-plane distance
     w_pTp =  2 / (1+exp(max_icp - icp));
     w_pTpln = 1-w_pTp;
-%     if icp==max_icp-10
-%         w_pTp =  1;
-%         w_pTpln = 0;
-%     end
     fprintf('iteration at %d-%d\n', icp,max_icp);
     for i=1:max_outer
         for j=1:max_inner
