@@ -9,7 +9,7 @@ target_points=target_points_normals(1:3,:);
 target_normals=target_points_normals(4:6,:);
 
 % 
-% [move_points,T]=SparsePointToPoint(source_points,target_points,50,20,5,0.4);
+% [move_points,T]=SparsePointToPoint(sour ce_points,target_points,50,20,5,0.4);
 % [move_points,T]=SparsePointToPlane(source_points,target_points,target_normals,50,20,5,0.4);
 [move_points,T]=SparseWeightedDistance(source_points,target_points,target_normals,50,20,5,0.4);
 
