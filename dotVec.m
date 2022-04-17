@@ -1,6 +1,6 @@
 function hat=dotVec(v)
 % INPUT:
-%   v: 6x1 vector
+%   v: 4x1 vector
 % OUTPUT:
 %   hat:4x6 matrix
 hat=zeros(4,6);
