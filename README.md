@@ -8,7 +8,7 @@ This program includes three algorithms:
 2. sparse point to plane
 3. ours(WES-ICP)
 ```
-The directory `github_repo` is the lie algebra library. Moreover, the function `createns` and `knnsearch` in our source files, which need `Statistics and Machine Learning Toolbox` in MATLAB.
+The directory `github_repo` is the lie algebra library. Moreover, the function `createns` and `knnsearch` in our source files need `Statistics and Machine Learning Toolbox` in MATLAB.
 
 The program includes the following three source point clouds and the same target point clouds.
 Those source point clouds have been coarse transformed, but they have different overlapping areas between target point clouds.
